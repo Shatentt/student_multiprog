@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<h1>Student Multiprog - Формулы</h1>
+<details>
+    <summary>Математика</summary>
+    <ul>
+        {% for elem in list %}
+        <li><a title={{elem}} rel="alternate">{{elem}}</a></li>
+        {% endfor %}
+    </ul>
+</details>
+<details>
+    <summary>Физика</summary>
+    <p>тема</p>
+    <p>тема</p>
+    <p>тема</p>
+</details>
+<details>
+    <summary>Избранное</summary>
+</details>
+
+{% block content %}{% endblock %}
+</body>
+</html>
