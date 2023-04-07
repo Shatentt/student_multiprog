@@ -9,16 +9,16 @@
 <details>
     <summary>Математика</summary>
     <ul>
-        {% for elem in list %}
+        {% for elem in list_math %}
         <li><a title={{elem}} rel="alternate">{{elem}}</a></li>
         {% endfor %}
     </ul>
 </details>
 <details>
     <summary>Физика</summary>
-    <p>тема</p>
-    <p>тема</p>
-    <p>тема</p>
+    {% for elem in list_physics %}
+    <li><a title={{elem}} rel="alternate">{{elem}}</a></li>
+    {% endfor %}
 </details>
 <details>
     <summary>Избранное</summary>
