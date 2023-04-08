@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Note</title>
+</head>
+<body>
+    <h1>Edit Note</h1>
+    <form method="POST" action="{{ url_for('edit_note', id=note.id) }}">
+        {{ form.csrf_token }}
+        {{ form.title.label }} {{ form.title }}
+        <br>
+        {{ form.content.label }} {{ form.content }}
+        <button type="submit">Save</button>
+    </form>
+    <br>
+    <form method="POST" action="{{ url_for('delete_note', id=note.id) }}">
+        {{ form.csrf_token }}
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>
