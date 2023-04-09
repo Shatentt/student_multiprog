@@ -3,10 +3,14 @@ import os
 from flask import Flask, render_template, redirect, url_for
 from forms.NoteForm import NoteForm
 from data.notes import db, Note
+from pathlib import Path
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///notes.db'
+cur_dir = Path.cwd()
+db_path = cur_dir / 'databases' / 'notes.db'
+print(db_path)
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 db.init_app(app)
 
 
