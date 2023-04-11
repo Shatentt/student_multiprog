@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{theme}}</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="{{ url_for('static', filename='css/themes.css') }}">
+</head>
+<body>
+<h1>Student Multiprog - {{theme}}</h1>
+{% for elem in list_math[theme] %}
+<img src={{elem}} alt="картинка c формулой">
+<br>
+<br>
+{% endfor %}
+<br>
+<input type="button" onclick="history.back();" value="Назад"/>
+</body>
+</html>

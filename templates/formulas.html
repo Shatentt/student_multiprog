@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="{{ url_for('static', filename='css/formulas.css') }}">
 </head>
 <body>
-<h1>Student Multiprog - Формулы</h1>
+<h1> Student Multiprog - Формулы </h1>
 <details>
     <summary>Математика</summary>
     <ul>
         {% for elem in list_math %}
-        <li><a title={{elem}} rel="alternate">{{elem}}</a></li>
+        <li><a title={{elem}} href="{{ url_for('themes', theme=elem) }}" rel="alternate">{{elem}}</a></li>
         {% endfor %}
     </ul>
 </details>
 <details>
     <summary>Физика</summary>
     {% for elem in list_physics %}
-    <li><a title={{elem}} rel="alternate">{{elem}}</a></li>
+    <li><a title={{elem}} href="{{ url_for('themes', theme=elem) }}" rel="alternate">{{elem}}</a></li>
     {% endfor %}
 </details>
 <details>
