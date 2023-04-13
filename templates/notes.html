@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Notes</title>
+    <title>Заметки</title>
+    <link rel="stylesheet" href="../static/css/notes.css">
 </head>
 <body>
-    <h1>Notes</h1>
+    <h1>Заметки - Student Multiprog</h1>
+    <h2>Создайте новую заметку:</h2>
+    <form method="POST" action="{{ url_for('notes') }}">
+        {{ form.csrf_token }}
+        {{ form.title.label }} <br> {{ form.title }}
+        <br>
+        {{ form.content.label }} <br> {{ form.content }}
+        <br>
+        <button type="submit">Создать</button>
+    </form>
+    <h2>Ваши заметки:</h2>
     <ul>
     {% for note in notes %}
         <li><a href="{{ url_for('edit_note', id=note.id) }}">{{ note.title }}</a></li>
     {% endfor %}
     </ul>
-    <h2>Create a new note:</h2>
-    <form method="POST" action="{{ url_for('notes') }}">
-        {{ form.csrf_token }}
-        {{ form.title.label }} {{ form.title }}
-        {{ form.content.label }} {{ form.content }}
-        <button type="submit">Create</button>
-    </form>
 </body>
 </html>
