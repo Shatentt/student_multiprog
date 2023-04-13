@@ -9,7 +9,7 @@
 </head>
 <body>
 <header>
-    <h1> Student Multiprog - Формулы </h1>
+    <h2> Student Multiprog - Формулы </h2>
 </header>
 <br>
 <br>
@@ -24,15 +24,17 @@
 <br>
 <div class="bg-blue">
     <details>
-        <summary>Математика</summary>
+        <summary class="btn btn-primary">Математика</summary>
         <br>
-        <ul>
-            {% for elem in list_math %}
-            <li><a class="link" title={{elem}} href="{{ url_for('themes', theme=elem) }}"
-                   rel="alternate">{{elem}}</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="card card-body mt-2">
+            <ul>
+                {% for elem in list_math %}
+                <li><a class="link" title={{elem}} href="{{ url_for('themes', theme=elem) }}"
+                       rel="alternate">{{elem}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </details>
 </div>
 <div class="bg-pink">
