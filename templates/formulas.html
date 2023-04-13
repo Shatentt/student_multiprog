@@ -8,24 +8,51 @@
           href="{{ url_for('static', filename='css/formulas.css') }}">
 </head>
 <body>
-<h1> Student Multiprog - Формулы </h1>
-<details>
-    <summary>Математика</summary>
-    <ul>
-        {% for elem in list_math %}
-        <li><a title={{elem}} href="{{ url_for('themes', theme=elem) }}" rel="alternate">{{elem}}</a></li>
-        {% endfor %}
-    </ul>
-</details>
-<details>
-    <summary>Физика</summary>
-    {% for elem in list_physics %}
-    <li><a title={{elem}} href="{{ url_for('themes', theme=elem) }}" rel="alternate">{{elem}}</a></li>
-    {% endfor %}
-</details>
-<details>
-    <summary>Избранное</summary>
-</details>
+<header>
+    <h1> Student Multiprog - Формулы </h1>
+</header>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="bg-blue">
+    <details>
+        <summary>Математика</summary>
+        <br>
+        <ul>
+            {% for elem in list_math %}
+            <li><a class="link" title={{elem}} href="{{ url_for('themes', theme=elem) }}"
+                   rel="alternate">{{elem}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </details>
+</div>
+<div class="bg-pink">
+    <details>
+        <summary>Физика</summary>
+        <br>
+        <ul>
+            {% for elem in list_physics %}
+            <li><a class="link" title={{elem}} href="{{ url_for('themes', theme=elem) }}"
+                   rel="alternate">{{elem}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </details>
+</div>
+<div class="bg-green">
+    <details>
+        <summary>Избранное</summary>
+    </details>
+</div>
 
 {% block content %}{% endblock %}
 </body>

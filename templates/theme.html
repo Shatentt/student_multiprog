@@ -8,9 +8,19 @@
           href="{{ url_for('static', filename='css/themes.css') }}">
 </head>
 <body>
-<h1>Student Multiprog - {{theme}}</h1>
+<header>
+    <h1>Student Multiprog - {{theme}}</h1>
+</header>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 {% for elem in list[theme] %}
-<img src={{elem}} alt="картинка c формулой">
+<img class="imgs" src={{elem}} alt="картинка c формулой">
 <br>
 <br>
 {% endfor %}
