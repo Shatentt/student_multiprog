@@ -56,7 +56,7 @@ def formulas():
     imgs_formulas['Кинематика'] = b[:35]
     imgs_formulas['Динамика'] = b[35:50]
     imgs_formulas['Статика'] = b[50:53]
-    imgs_formulas['Гидростатика '] = b[53:60]
+    imgs_formulas['Гидростатика'] = b[53:60]
     imgs_formulas['Импульс'] = b[60:67]
     imgs_formulas['Работа, мощность, энергия'] = b[67:77]
     imgs_formulas['Молекулярная физика'] = b[77:94]

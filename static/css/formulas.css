@@ -4,11 +4,11 @@
 }
 header {
     position: absolute;
-    height: 10vh;
+    height: 18vh;
     width: 100%;
     background: #01000f;
 }
-header h2 {
+header p {
     font-size: 55px;
     height: 50%;
     margin-top: 20px;
@@ -24,7 +24,7 @@ summary {
 }
 
 body {
-    font-family: Arial;
+    font-family: 'Century Gothic';
     color: black;
 }
 
