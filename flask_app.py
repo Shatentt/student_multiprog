@@ -14,6 +14,11 @@ login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'student_multiprog_secret_key'
 
 
+@app.route("/calc")
+def calc():
+    return render_template("calc.html", title='Калькулятор')
+
+
 @app.route("/")
 def index():
     return render_template("register.html")
