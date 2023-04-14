@@ -1,0 +1,33 @@
+<meta charset="UTF-8">
+<title>{{theme}}</title>
+<link rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/themes.css') }}">
+
+<header>
+    <p>Student Multiprog - {{theme}}</p>
+</header>
+<br>
+{% extends "head.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% for elem in list[theme] %}
+<img class="imgs" src={{elem}} alt="картинка c формулой">
+<br>
+<br>
+{% endfor %}
+<br>
+<div>
+    <button class="button" onclick="window.location.href = '/formulas';">Назад</button>
+</div>
+{% endblock %}

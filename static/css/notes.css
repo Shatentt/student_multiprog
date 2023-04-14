@@ -1,7 +1,8 @@
 input[type="text"], textarea {
-    border: 1px solid #ccc;
+    border: 2px solid #8d3bb3;
     padding: 5px;
     margin-bottom: 10px;
+    border-radius: 10px;
 }
 textarea {
     width: 400px;
@@ -10,6 +11,7 @@ textarea {
 .form-group {
     margin-bottom: 5px;
     margin-top: 5px;
+    margin-left: 30px;
 }
 .form-group button {
     margin-right: 20px;
@@ -17,4 +19,96 @@ textarea {
 }
 .form-up {
     margin-top: 15px;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Century Gothic';
+    color: black;
+}
+header {
+    position: absolute;
+    height: 12vh;
+    width: 100%;
+    background: #01000f;
+}
+header p {
+    font-size: 55px;
+    height: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: white;
+}
+.new {
+    margin-left: 30px;
+    margin-top: 40px;
+}
+p {
+    font-size: 40px;
+}
+.but {
+    background: #0000;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    border: 2px solid #000;
+    padding: 25px;
+}
+.but:hover {
+      transition: 0.7s;
+      cursor: pointer;
+      text-decoration: underline white;
+      text-underline-offset: 10px;
+}
+.subm {
+    width: 410px;
+    height: 70px;
+    background: black;
+    color: white;
+    font-size: 40px;
+    border-radius: 10px;
+}
+.subm:hover {
+      background-color:#190c1f;
+      transition: 0.7s;
+      cursor: pointer;
+}
+.a-div {
+    margin-left: 30px;
+}
+li {
+    cursor: pointer;
+    margin-left: 60px;
+    font-size: 20px;
+}
+.link {
+    color: black;
+    text-decoration: none;
+}
+.link:hover {
+    color: #76687d;
+}
+.link:active {
+    color: black;
+    text-decoration: none;
+}
+ul {
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background: #b7a3d941;
+    margin-right: 1vw;
+}
+.edit {
+    margin-top: 40px;
+    margin-left: 30px;
+}
+.back {
+    font-size: 40px;
+}
+.head-but {
+    background: black;
+    margin-top: 6vh;
+
 }
