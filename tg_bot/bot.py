@@ -6,7 +6,7 @@ from config import BOT_TOKEN
 import sqlite3
 
 # Соединяемся с базой данных SQL
-conn = sqlite3.connect('notes.db')
+conn = sqlite3.connect('../databases/notes.db')
 cur = conn.cursor()
 
 # Создаем таблицу для хранения заметок
@@ -14,7 +14,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS notes
                (id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
                 title TEXT,
-                content TEXT)''')
+                content TEXT,
+                tg BOOLEAN)''')
 
 
 logging.basicConfig(
@@ -29,7 +30,7 @@ async def create_note_handler(update, context):
     user_id = update.message.from_user.id
     title = ' '.join(context.args)
     content = ""
-    cur.execute('INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)', (user_id, title, content))
+    cur.execute('INSERT INTO notes (user_id, title, content, tg) VALUES (?, ?, ?, ?)', (user_id, title, content, 1))
     conn.commit()
     await update.message.reply_text('Заметка успешно создана!')
 
@@ -37,7 +38,7 @@ async def create_note_handler(update, context):
 # Функция для просмотра заметок
 async def view_notes_handler(update, context):
     user_id = update.message.from_user.id
-    cur.execute('SELECT id, title, content FROM notes WHERE user_id = ?', (user_id,))
+    cur.execute('SELECT id, title, content FROM notes WHERE tg = 1 AND user_id = ?', (user_id,))
     notes = cur.fetchall()
     if len(notes) == 0:
         await update.message.reply_text('У вас нет заметок!')
@@ -51,7 +52,7 @@ async def edit_note_handler(update, context):
     user_id = update.message.from_user.id
     note_id = context.args[0]
     content = ' '.join(context.args[1:])
-    cur.execute('UPDATE notes SET content = ? WHERE id = ? AND user_id = ?', (content, note_id, user_id))
+    cur.execute('UPDATE notes SET content = ? WHERE tg = 1 AND id = ? AND user_id = ?', (content, note_id, user_id))
     conn.commit()
     if cur.rowcount == 0:
         await update.message.reply_text('Заметка не найдена!')
@@ -63,7 +64,7 @@ async def edit_note_handler(update, context):
 async def delete_note_handler(update, context):
     user_id = update.message.from_user.id
     note_id = context.args[0]
-    cur.execute('DELETE FROM notes WHERE id = ? AND user_id = ?', (note_id, user_id))
+    cur.execute('DELETE FROM notes WHERE id = ? AND user_id = ? AND tg = 1', (note_id, user_id))
     conn.commit()
     if cur.rowcount == 0:
         await update.message.reply_text('Заметка не найдена!')

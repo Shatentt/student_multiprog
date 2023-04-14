@@ -75,6 +75,7 @@ def logout():
     logout_user()
     return redirect("/")
 
+
 @app.route('/notes', methods=['GET', 'POST'])
 @login_required
 def notes():
@@ -82,11 +83,11 @@ def notes():
     if form.validate_on_submit():
         title = form.title.data
         content = form.content.data
-        note = Note(title=title, content=content, user_id=current_user.id)
+        note = Note(title=title, content=content, user_id=current_user.id, tg=0)
         db.session.add(note)
         db.session.commit()
         return redirect(url_for('notes'))
-    notes = Note.query.filter_by(user_id=current_user.id).all()
+    notes = Note.query.filter_by(user_id=current_user.id, tg=0).all()
     return render_template('notes.html', form=form, notes=notes)
 
 
@@ -95,7 +96,9 @@ def notes():
 def edit_note(id):
     note = Note.query.get_or_404(id)
     form = NoteForm(obj=note)
+    print(123)
     if form.validate_on_submit():
+        print(123123)
         form.populate_obj(note)
         db.session.commit()
         return redirect(url_for('notes'))

@@ -8,10 +8,10 @@ db = SQLAlchemy()
 class Note(db.Model):
     __tablename__ = 'notes'
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
     title = db.Column(db.String(100))
     content = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_id = db.Column(db.Integer)
+    tg = db.Column(db.Boolean, default=0)
 
     def __repr__(self):
         return f"Note('{self.title}', '{self.content}', '{self.created_at}')"

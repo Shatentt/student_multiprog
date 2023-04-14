@@ -9,10 +9,10 @@
     <h2>Создайте новую заметку:</h2>
     <form method="POST" action="{{ url_for('notes') }}">
         {{ form.csrf_token }}
-        {{ form.title.label }} <br> {{ form.title }}
-        <br>
-        {{ form.content.label }} <br> {{ form.content }}
-        <br>
+        <div class="form-group"> {{ form.title.label }} </div>
+        <div class="form-group"> {{ form.title }} </div>
+        <div class="form-group"> {{ form.content.label }} </div>
+        <div class="form-group"> {{ form.content }} </div>
         <button type="submit">Создать</button>
     </form>
     <h2>Ваши заметки:</h2>
