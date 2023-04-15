@@ -10,7 +10,7 @@ const action = ['+', '-', 'X', '/'];
 // Ввод пользователя
 const out = document.querySelector('.screen p');
 
-function clearAll () {
+function clearAll() {
     a = '';
     b = '';
     sign = '';
