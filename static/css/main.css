@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Century Gothic';
+}
+header {
+    position: absolute;
+    height: 12vh;
+    width: 100%;
+    background: #01000f;
+}
+header p {
+    font-size: 55px;
+    height: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: white;
+    font-family: 'Century Gothic';нача
+}
+.but {
+    background: #0000;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    border: 2px solid #000;
+    padding: 25px;
+}
+.but:hover {
+      transition: 0.7s;
+      cursor: pointer;
+      text-decoration: underline white;
+      text-underline-offset: 10px;
+}
+.head-but {
+    background: black;
+    margin-top: 6vh;
+}
