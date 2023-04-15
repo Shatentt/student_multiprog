@@ -42,6 +42,11 @@ def calc():
     return render_template("calc.html", title='Калькулятор')
 
 
+@app.route("/graph-calc")
+def graph_calc():
+    return render_template("graph-calc.html")
+
+
 @app.route("/")
 def index():
     return render_template("register.html")
