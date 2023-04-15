@@ -69,6 +69,7 @@ p {
     color: white;
     font-size: 40px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 .subm:hover {
       background-color:#190c1f;

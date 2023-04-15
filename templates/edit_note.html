@@ -17,13 +17,11 @@
         <div class="form-group"> {{ form.title }}</div>
         <div class="form-group"> {{ form.content.label }}</div>
         <div class="form-group"> {{ form.content }}</div>
+        <button class="subm" type="submit">Сохранить</button>
     </form>
     <form method="POST" action="{{ url_for('delete_note', id=note.id) }}">
         {{ form.csrf_token }}
-        <div class="form-group">
-            <button class="subm" type="submit">Сохранить</button>
-            <button class="subm" type="submit">Удалить заметку</button>
-        </div>
+        <button class="subm" type="submit">Удалить заметку</button>
     </form>
 </div>
 
