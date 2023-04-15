@@ -1,0 +1,50 @@
+<title>Формулы</title>
+<link rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/formulas.css') }}">
+<header>
+    <p> Student Multiprog - Формулы </p>
+</header>
+<br>
+{% extends "head.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<div class="bg-dark">
+    <details class="details-animated">
+        <summary class="btn btn-primary">Математика</summary>
+        <br>
+        <div class="card card-body mt-2">
+            <ul>
+                {% for elem in list_math %}
+                <li><a class="link" title={{elem}} href="{{ url_for('themes', theme=elem) }}"
+                       rel="alternate">{{elem}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </details>
+</div>
+<div class="bg-pink">
+    <details>
+        <summary>Физика</summary>
+        <br>
+        <ul>
+            {% for elem in list_physics %}
+            <li><a class="link" title={{elem}} href="{{ url_for('themes', theme=elem) }}"
+                   rel="alternate">{{elem}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </details>
+</div>
+<div class="bg-blue">
+    <details>
+        <summary>Избранное</summary>
+    </details>
+</div>
+
+{% endblock %}
