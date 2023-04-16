@@ -7,12 +7,12 @@ body {
 }
 header {
     position: absolute;
-    height: 12vh;
+    height: 170px;
     width: 100%;
-    background: #01000f;
+    background: #000000;
 }
 header p {
-    font-size: 55px;
+    font-size: 40px;
     height: 50%;
     margin-top: 20px;
     margin-left: 30px;
@@ -25,8 +25,8 @@ header p {
 }
 .button {
     position: fixed;
-    left: 70%;
-    top:90%;
+    bottom: 10;
+    right: 10;
     width: 500px;
     height: 70px;
     background: black;
@@ -34,14 +34,13 @@ header p {
     font-size: 40px;
 }
 .button:hover {
-      background-color:#262626;
+      background-color:#1f1136;
       transition: 0.7s;
       cursor: pointer;
 }
 .head-but {
     background: black;
-    margin-top: 6vh;
-
+    margin-top: 115px;
 }
 .but {
     background: #0000;
