@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic';
+}
+.p1 {
+    font-size: 60px;
+}
+header {
+    position: absolute;
+    height: 12vh;
+    width: 100%;
+    background: #01000f;
+}
+header p {
+    font-size: 55px;
+    height: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: white;
+    font-family: 'Century Gothic';
+}
+.but {
+    width: 200px;
+    height: 50px;
+    background: black;
+    color: white;
+    font-size: 20px;
+    margin-top: 10vh;
+}

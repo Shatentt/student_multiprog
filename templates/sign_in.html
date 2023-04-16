@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Авторизация</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="{{ url_for('static', filename='css/sign_in.css') }}">
 </head>
 <body>
-    <h1>Авторизация</h1>
+<header>
+    <p> Student Multiprog</p>
+</header>
+<br>
+<br>
+<div class="a" align="center">
+    <br>
+    <p class="p1">Авторизация</p>
+    <br>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
             {{ form.name.label }}<br>
             {{ form.name(class="form-control") }}<br>
             {% for error in form.name.errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endfor %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
         </p>
+        <br>
         <p>
             {{ form.password.label }}<br>
             {{ form.password(class="form-control", type="password") }}<br>
             {% for error in form.password.errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endfor %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
         </p>
+        <br>
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <br>
+        <p>{{ form.submit(type="submit", class="btn bt btn-primary") }}</p>
+        <br>
         <div>{{ message }}</div>
+        <br>
     </form>
-</form>
+</div>
 </body>
 </html>
