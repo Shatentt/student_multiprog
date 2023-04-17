@@ -1,0 +1,73 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic';
+}
+.p1 {
+    font-size: 60px;
+}
+header {
+    position: absolute;
+    height: 150px;
+    width: 100%;
+    background: #000000;
+}
+header p {
+    font-size: 45px;
+    height: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: white;
+    font-family: 'Century Gothic';
+}
+input[type="text"], textarea {
+    border: 2px solid #24005e;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+input[type="password"], textarea {
+    border: 2px solid #24005e;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 30px;
+}
+.form-group button {
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.form-up {
+    margin-top: 15px;
+}
+.a {
+    margin-top: 150px;
+    margin-left: 30vw;
+    margin-right: 30vw;
+    font-size: 30px;
+    border: 2px solid #8d3bb3;
+    border-radius: 10px;
+}
+.bt {
+    width: 410px;
+    height: 70px;
+    background: black;
+    color: white;
+    font-size: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.bt:hover {
+    background: #1f1136;
+    transition: 0.7s;
+}
+.head-but {
+    background: black;
+    margin-top: 6vh;
+}
