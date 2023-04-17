@@ -9,14 +9,13 @@ main {
 }
 header {
     position: absolute;
-    height: 11.9vh;
+    height: 150px;
     width: 100%;
-    background: #01000f;
+    background: #000000;
 }
 header p {
-    font-size: 55px;
-    height: 50%;
-    margin-top: 20px;
+    font-size: 45px;
+    margin-top: 10px;
     margin-left: 30px;
     color: white;
     font-family: 'Century Gothic';
@@ -31,7 +30,6 @@ p {
     cursor: pointer;
     border: 2px solid #000;
     padding: 25px;
-    font-family: 'Century Gothic';
 }
 .but:hover {
       transition: 0.7s;
@@ -41,7 +39,7 @@ p {
 }
 .head-but {
     background: black;
-    margin-top: 4.5vh;
+    margin-top: 85px;
 
 }
 .main {
