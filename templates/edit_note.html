@@ -2,11 +2,10 @@
 <link rel="stylesheet" href="../static/css/notes.css">
 
 <header>
-    <p>Student Multiprog - редактирование заметки</p>
+    <p>Student Multiprog - Редактирование заметки</p>
 </header>
 <br>
 {% extends "head.html" %}
-
 {% block content %}
 <br>
 <div class="edit">
@@ -17,12 +16,13 @@
         <div class="form-group"> {{ form.title }}</div>
         <div class="form-group"> {{ form.content.label }}</div>
         <div class="form-group"> {{ form.content }}</div>
-        <button class="subm" type="submit">Сохранить</button>
     </form>
     <form method="POST" action="{{ url_for('delete_note', id=note.id) }}">
         {{ form.csrf_token }}
-        <button class="subm" type="submit">Удалить заметку</button>
+        <div class="form-group">
+            <button class="subm" type="submit">Сохранить</button>
+            <button class="subm" type="submit">Удалить заметку</button>
+        </div>
     </form>
 </div>
-
 {% endblock %}
