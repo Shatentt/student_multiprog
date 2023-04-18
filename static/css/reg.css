@@ -1,26 +1,18 @@
-
 *{
     margin: 0;
     padding: 0;
 }
-main {
-    color: black;
-}
 header {
     position: absolute;
-    height: 170px;
+    height: 150px;
     width: 100%;
     background: #000000;
 }
 header p {
-    font-size: 40px;
-    margin-top: 10px;
+    font-size: 50px;
     margin-left: 30px;
     color: white;
     font-family: 'Century Gothic';
-}
-p {
-    font-size: 40px;
 }
 .but {
     background: #0000;
@@ -38,10 +30,12 @@ p {
 }
 .head-but {
     background: black;
-    margin-top: 102px;
-
+    margin-top: 135px;
 }
-.main {
-    margin-top: 40px;
-    margin-left: 30px;
+p {
+    font-size: 25px;
+    margin-left: 140px;
+    margin-right: 150px;
+    padding-top: 30px;
+    color: black;
 }

@@ -32,7 +32,7 @@ function draw() {
     context.stroke();
 
     // график функции
-    context.strokeStyle = "red";
+    context.strokeStyle = "#9247f5";
     context.lineWidth = 3;
     context.beginPath();
     let y = x => eval(func.value);
