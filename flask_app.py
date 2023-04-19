@@ -1,4 +1,6 @@
 import os
+
+import easyocr
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from data.users import User
 from forms.SignInForm import SignInForm
@@ -7,7 +9,7 @@ from forms.NoteForm import NoteForm
 from data.notes import db, Note
 from data import db_session
 from pathlib import Path
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
@@ -136,6 +138,29 @@ def delete_note(id):
 @login_required
 def main_index():
     return render_template("main_page.html")
+
+@app.route('/text-recognize')
+def upload_image():
+    return render_template('image_upload.html')
+
+
+@app.route('/text-recognize/done', methods=['POST'])
+def recognized_text():
+    file = request.files['file']
+    file.save(os.path.join('static/assets/images', file.filename))
+    language = request.form['language']
+    reader = easyocr.Reader([language])
+    try:
+        result = reader.readtext(os.path.join('static/assets/images', file.filename))
+        words = []
+        for r in result:
+            words.append(r[1])
+        words = " ".join(words)
+        if os.path.isfile(os.path.join('static/assets/images', file.filename)):
+            os.remove(os.path.join('static/assets/images', file.filename))
+    except AttributeError:
+        words = "Ошибка! Возможно, вам стоит изменить расширение файла или поменять его название (! название не должно содержать русские буквы !)"
+    return render_template('recognize_result.html', words=words)
 
 
 @app.route('/formulas')
