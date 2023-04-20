@@ -1,10 +1,14 @@
 import os
-from flask_login import LoginManager, login_user, login_required, logout_user
+from datetime import time
+from datetime import date as Date
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from data.schedules import Schedule
 from data.users import User
 from forms.SignInForm import SignInForm
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from data import db_session
 from forms.SignUpForm import SignUpForm
+from forms.ScheduleForm import ScheduleForm
 
 db_session.global_init('databases/users.db')
 
@@ -22,6 +26,40 @@ def calc():
 @app.route("/graph-calc")
 def graph_calc():
     return render_template("graph-calc.html")
+
+
+@app.route("/calendar/get", methods=['GET'])
+def get_schedule():
+    date = request.args.get('date')
+    db_sess = db_session.create_session()
+    schedule = db_sess.query(Schedule).filter(Schedule.user_id == current_user.get_id(), Schedule.date == date)
+    return render_template("calendar_form.html", schedule=schedule)
+
+
+@app.route("/calendar")
+def calendar():
+    db_sess = db_session.create_session()
+    schedule = db_sess.query(Schedule).filter(Schedule.user_id == current_user.get_id())
+    return render_template("calendar_read.html", schedule=schedule)
+
+
+@app.route("/calendar/new", methods=['GET', 'POST'])
+def calendar_add():
+    date = request.args.get('date')
+    form = ScheduleForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        schedule = Schedule(
+            title=form.title.data,
+            content=form.content.data,
+            time=time(form.hour.data, form.minute.data),
+            date=Date(*map(int, date.split('-'))),
+            user_id=current_user.get_id()
+        )
+        db_sess.add(schedule)
+        db_sess.commit()
+        return redirect('/calendar')
+    return render_template('calendar_write.html', form=form)
 
 
 @app.route("/")
@@ -66,6 +104,11 @@ def sign_up():
         db_sess.commit()
         return redirect('/sign_in')
     return render_template('sign_up.html', title='Регистрация', form=form)
+
+
+@app.route('/translator')
+def translator():
+    return render_template('translator.html')
 
 
 @login_manager.user_loader

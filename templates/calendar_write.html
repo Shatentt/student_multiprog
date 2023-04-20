@@ -1,0 +1,43 @@
+{% extends "head.html" %}
+
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(class="form-control") }}<br>
+        {% for error in form.title.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.content.label }}<br>
+        {{ form.content(class="form-control") }}<br>
+        {% for error in form.content.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>
+        <h1>Время:</h1>
+        {{ form.hour.label }}<br>
+        {{ form.hour(class="form-control") }}<br>
+        {% for error in form.hour.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+        {{ form.minute.label }}<br>
+        {{ form.minute(class="form-control") }}<br>
+        {% for error in form.minute.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    {{ form.submit(type="submit", class="btn btn-primary") }}
+</form>
+{% endblock %}
