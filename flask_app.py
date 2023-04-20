@@ -106,6 +106,11 @@ def sign_up():
     return render_template('sign_up.html', title='Регистрация', form=form)
 
 
+@app.route('/translator')
+def translator():
+    return render_template('translator.html')
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
