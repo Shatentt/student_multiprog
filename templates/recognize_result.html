@@ -1,12 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Результат распознавания текста</title>
-</head>
+<title>Результат распознавания текста</title>
+<link rel="stylesheet" href="static/css/upload.css">
+<header>
+    <p>Student Multiprog - Результат Распознавания текста</p>
+</header>
+<br>
+{% extends "head.html" %}
+
+{% block content %}
+
 <body>
-    <h1>Результат распознавания текста:</h1>
+<div align="center" class="res">
+    <p>Результат:</p>
     <p style="width: 50%">{{ words }}</p>
     <br><br>
-    <a href="/text-recognize">Загрузить новую картинку</a>
+    <a class="link" href="/text-recognize">Загрузить новую картинку</a>
+</div>
 </body>
-</html>
+{% endblock %}

@@ -84,3 +84,19 @@ select {
 .a {
     margin-top: 40px;
 }
+.link{
+    color: white;
+    text-decoration: none;
+    font-size: 40px;
+}
+.link:active {
+    color: black;
+    text-decoration: none;
+}
+.user_img{
+    max-width: 700px;
+    max-height: 500px;
+}
+.res {
+    margin-top: 40px;
+}
