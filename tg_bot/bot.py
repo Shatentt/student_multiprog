@@ -1,12 +1,14 @@
 import logging
 
 import requests
+from deep_translator.exceptions import LanguageNotSupportedException
 from dotenv import load_dotenv
 from telegram.ext import Application, Updater, CommandHandler, MessageHandler, filters
 from config import BOT_TOKEN
 import sqlite3
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+from deep_translator import GoogleTranslator
 
 HEADERS = {"User-Agent": UserAgent().random}
 imgs_formulas_maths = {}
@@ -59,6 +61,10 @@ imgs_formulas_physics['Оптика'] = b[224:233]
 imgs_formulas_physics['Атомная и ядерная физика'] = b[233:254]
 imgs_formulas_physics['Основы специальной теории относительности (СТО)'] = b[254:264]
 
+is_translating = False
+from_lang = "auto"
+to_lang = "auto"
+
 # Соединяемся с базой данных SQL
 conn = sqlite3.connect('../databases/notes.db')
 cur = conn.cursor()
@@ -79,7 +85,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 
-async def show_formulas(update, context):
+async def formulas_handler(update, context):
     if len(context.args) == 0:
         await update.message.reply_text("/show_formulas maths - посмотреть названия и id тем по математике\n/show_formulas phisics - посмотреть названия и id тем по физике\n/show_formulas <id> - найти формулы по айди темы")
     elif context.args[0] == "maths":
@@ -98,66 +104,80 @@ async def show_formulas(update, context):
             for i in imgs_formulas_physics[list(imgs_formulas_physics)[int(context.args[0]) - 11]]:
                 await update.message.reply_photo(i)
 
-
-# Функция для создания заметки
-async def create_note_handler(update, context):
-    user_id = update.message.from_user.id
-    title = ' '.join(context.args)
-    content = ""
-    cur.execute('INSERT INTO notes (user_id, title, content, tg) VALUES (?, ?, ?, ?)', (user_id, title, content, 1))
-    conn.commit()
-    await update.message.reply_text('Заметка успешно создана!')
-
-
 async def handle_text(update, context):
-    text = update.message.text
-    await update.message.reply_text(f'Ваше сообщение - {text}')
+    if to_lang != "auto":
+        text = update.message.text
+        translated = GoogleTranslator(source=from_lang, target=to_lang).translate(text)
+        await update.message.reply_text(f'Перевод вашего сообщения c {from_lang} на {to_lang} - {translated}')
 
 
-# Функция для просмотра заметок
-async def view_notes_handler(update, context):
-    user_id = update.message.from_user.id
-    cur.execute('SELECT id, title, content FROM notes WHERE tg = 1 AND user_id = ?', (user_id,))
-    notes = cur.fetchall()
-    if len(notes) == 0:
-        await update.message.reply_text('У вас нет заметок!')
-    else:
-        for note in notes:
-            await update.message.reply_text(f'{note[0]}. {note[1]}\n\n{note[2]}')
+async def start(update, context):
+    await update.message.reply_text(f'Привет! Я бот-помощник для студентов и школьников. Чтобы узнать, что я могу, ты можешь написать:\n/notes - показать все команды для заметок\n/translate - показать информацию о переводчике\n/formulas - показать информацию о формулах')
+
+async def translate_handler(update, context):
+    global from_lang, to_lang
+    if len(context.args) == 0:
+        s = ""
+        langs_dict = GoogleTranslator().get_supported_languages(as_dict=True)
+        for i in langs_dict:
+            s += f"{i} - {langs_dict[i]}\n"
+        await update.message.reply_text(f'Введите /translate <from_language> <to_language>, чтобы установить с какого и на какой язык переводить.После выбора языка напишите боту любое сообщение, и он скажет вам его перевод.\nАйди языков:\n{s}')
+    elif len(context.args) == 2:
+        try:
+            translated = GoogleTranslator(source=context.args[0], target=context.args[1]).translate("")
+            from_lang = context.args[0]
+            to_lang = context.args[1]
+            await update.message.reply_text(f'Вы успешно сменили языки!')
+        except LanguageNotSupportedException:
+            await update.message.reply_text(f'Ошибка! Неправильно введен айди языка')
 
 
-# Функция для редактирования заметки
-async def edit_note_handler(update, context):
-    user_id = update.message.from_user.id
-    note_id = context.args[0]
-    content = ' '.join(context.args[1:])
-    cur.execute('UPDATE notes SET content = ? WHERE tg = 1 AND id = ? AND user_id = ?', (content, note_id, user_id))
-    conn.commit()
-    if cur.rowcount == 0:
-        await update.message.reply_text('Заметка не найдена!')
-    else:
-        await update.message.reply_text('Заметка успешно отредактирована!')
-
-
-# Функция для удаления заметки
-async def delete_note_handler(update, context):
-    user_id = update.message.from_user.id
-    note_id = context.args[0]
-    cur.execute('DELETE FROM notes WHERE id = ? AND user_id = ? AND tg = 1', (note_id, user_id))
-    conn.commit()
-    if cur.rowcount == 0:
-        await update.message.reply_text('Заметка не найдена!')
-    else:
-        await update.message.reply_text('Заметка успешно удалена!')
+async def notes_handler(update, context):
+    if len(context.args) == 0:
+        await update.message.reply_text('Команды для заметок:\n/notes view - посмотреть ваши заметки и их айди\n/notes create <note_name> - создать заметку с названием <note_name>\n/notes edit <note_id> <text> - изменить текст заметки по айди\n/notes delete <note_id> - удалить заметку по айди')
+    elif context.args[0] == "create":
+        user_id = update.message.from_user.id
+        title = ' '.join(context.args[1:])
+        content = ""
+        cur.execute('INSERT INTO notes (user_id, title, content, tg) VALUES (?, ?, ?, ?)', (user_id, title, content, 1))
+        conn.commit()
+        await update.message.reply_text('Заметка успешно создана!')
+    elif context.args[0] == "view":
+        user_id = update.message.from_user.id
+        cur.execute('SELECT id, title, content FROM notes WHERE tg = 1 AND user_id = ?', (user_id,))
+        notes = cur.fetchall()
+        if len(notes) == 0:
+            await update.message.reply_text('У вас нет заметок!')
+        else:
+            for note in notes:
+                await update.message.reply_text(f'{note[0]}. {note[1]}\n\n{note[2]}')
+    elif context.args[0] == "edit":
+        user_id = update.message.from_user.id
+        note_id = context.args[1]
+        content = ' '.join(context.args[2:])
+        cur.execute('UPDATE notes SET content = ? WHERE tg = 1 AND id = ? AND user_id = ?', (content, note_id, user_id))
+        conn.commit()
+        if cur.rowcount == 0:
+            await update.message.reply_text('Заметка не найдена!')
+        else:
+            await update.message.reply_text('Заметка успешно отредактирована!')
+    elif context.args[0] == "delete":
+        user_id = update.message.from_user.id
+        note_id = context.args[1]
+        cur.execute('DELETE FROM notes WHERE id = ? AND user_id = ? AND tg = 1', (note_id, user_id))
+        conn.commit()
+        if cur.rowcount == 0:
+            await update.message.reply_text('Заметка не найдена!')
+        else:
+            await update.message.reply_text('Заметка успешно удалена!')
 
 
 def main():
     application = Application.builder().token(BOT_TOKEN).build()
-    application.add_handler(CommandHandler('create_note', create_note_handler))
-    application.add_handler(CommandHandler('view_notes', view_notes_handler))
-    application.add_handler(CommandHandler('edit_note', edit_note_handler))
-    application.add_handler(CommandHandler('delete_note', delete_note_handler))
-    application.add_handler(CommandHandler('show_formulas', show_formulas))
+    application.add_handler(CommandHandler('notes', notes_handler))
+    application.add_handler(CommandHandler('formulas', formulas_handler))
+    application.add_handler(CommandHandler('translate', translate_handler))
+    application.add_handler(CommandHandler('start', start))
     application.add_handler(MessageHandler(filters.TEXT, handle_text))
     application.run_polling()
 
