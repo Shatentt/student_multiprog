@@ -1,0 +1,102 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header {
+    position: absolute;
+    height: 170px;
+    width: 100%;
+    background: #000000;
+}
+header p {
+    font-size: 40px;
+    height: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: white;
+}
+
+body {
+    font-family: 'Century Gothic';
+    color: black;
+}
+
+.but {
+    background: #0000;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    border: 2px solid #000;
+    padding: 25px;
+}
+.but:hover {
+      transition: 0.7s;
+      cursor: pointer;
+      text-decoration: underline white;
+      text-underline-offset: 10px;
+}
+.head-but {
+    background: black;
+    margin-top: 115px;
+}
+p {
+    font-size: 50px;
+}
+.user_img {
+    border: 2px solid #24005e;
+}
+.bt {
+    width: 550px;
+    height: 70px;
+    background: black;
+    color: white;
+    font-size: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.bt:hover {
+    background: #1f1136;
+    transition: 0.3s;
+}
+label {
+    font-size: 30px;
+}
+select {
+    font-size: 20px;
+}
+
+.input-file {
+	position: relative;
+	display: inline-block;
+    display: inline-block;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 25px;
+	vertical-align: middle;
+	text-align: center;
+	border-radius: 4px;
+	background-color: #b7a3d941;
+}
+.input-file:hover {
+	background-color: #b7a3d993;
+    transition: 0.4s;
+}
+.a {
+    margin-top: 40px;
+}
+.link{
+    color: white;
+    text-decoration: none;
+    font-size: 40px;
+}
+.link:active {
+    color: black;
+    text-decoration: none;
+}
+.user_img{
+    max-width: 700px;
+    max-height: 500px;
+}
+.res {
+    margin-top: 40px;
+}

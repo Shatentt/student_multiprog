@@ -1,0 +1,61 @@
+<title>Добавить пункт</title>
+<link rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/calendar.css') }}">
+<header>
+    <p> Student Multiprog - Изменение расписания</p>
+</header>
+<br>
+
+{% extends "head.html" %}
+
+{% block content %}
+<form action="" method="post">
+    <div align="center" style="margin-top: 70px; font-size: 25px;">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(class="form-control") }}<br>
+            {% for error in form.title.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <br>
+        <p>
+            {{ form.content.label }}<br>
+            {{ form.content(class="form-control") }}<br>
+            {% for error in form.content.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <br>
+        <p>
+        <p style="font-size: 45px;">Время:</p>
+        <br>
+        {{ form.hour.label }}<br>
+        {{ form.hour(class="form-control") }}<br>
+        {% for error in form.hour.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        <br>
+        {{ form.minute.label }}<br>
+        {{ form.minute(class="form-control") }}<br>
+        {% for error in form.minute.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <br>
+        {{ form.submit(type="submit", class="btn btn-primary") }}
+        <br>
+        <br>
+    </div>
+</form>
+{% endblock %}

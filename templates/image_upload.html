@@ -1,22 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Загрузка картинки</title>
-    <link rel="stylesheet" href="/static/css/image_upload.css">
-</head>
+<title>Загрузка картинки</title>
+<link rel="stylesheet" href="static/css/upload.css">
+<link rel="stylesheet" href="/static/css/image_upload.css">
+<header>
+    <p>Student Multiprog - Распознавание текста</p>
+</header>
+<br>
+{% extends "head.html" %}
+
+{% block content %}
+<br>
 <body>
-    <h1>Загрузите картинку для распознавания текста</h1>
+<div class="a" align="center">
+    <p style="background: #c5ebe86f">Загрузите картинку для распознавания текста</p>
+    <br>
+    <br>
     <form action="/text-recognize/done" method="post" enctype="multipart/form-data">
-        <input type="file" id="fileInput" name="file">
-        <br><br>
+        <input class="input-file" type="file" id="fileInput" name="file">
+        <br>
+        <br>
+        <br>
         <label for="language">Выберите язык:</label>
         <select name="language" id="language">
             <option value="en">Английский</option>
             <option value="ru">Русский</option>
         </select>
-        <br><br>
-        <h2>Загруженная картинка:</h2>
+        <br>
+        <br>
+        <br>
+        <p>Загруженная картинка:</p>
+        <br>
+        <br>
         <img class="user_img" id="previewImg" src="" onerror="this.style.visibility = 'hidden'">
+        <br>
+        <br>
         <script>
             const fileInput = document.getElementById('fileInput');
             const previewImg = document.getElementById('previewImg');
@@ -31,9 +47,14 @@
                     reader.readAsDataURL(file);
                 }
             });
+
         </script>
         <br><br>
-        <input type="submit" value="Распознать текст">
+        <input class="bt" type="submit" value="Распознать текст">
+        <br>
+        <br>
+        <br>
     </form>
+</div>
 </body>
-</html>
+{% endblock %}

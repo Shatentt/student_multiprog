@@ -20,7 +20,9 @@ header p {
     font-family: 'Century Gothic';
 }
 p {
-    font-size: 40px;
+    font-size: 30px;
+    font-family: 'Century Gothic';
+    line-height: 60px;
 }
 .but {
     background: #0000;
@@ -44,4 +46,5 @@ p {
 .main {
     margin-top: 40px;
     margin-left: 30px;
-}
+* {
+    padding: 5px;

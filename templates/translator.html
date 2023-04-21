@@ -1,0 +1,80 @@
+<title>Переводчик</title>
+<link rel="stylesheet" href="../static/css/translator.css">
+<header>
+    <p>Student Multiprog - Переводчик</p>
+</header>
+<br>
+
+{% extends "head.html" %}
+
+{% block content %}
+<section class="pb-4">
+    <div align="center" class="bg-white boarder rounded-5">
+        <form>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <select id="lang-src" class="sel form-control">
+                            <option value="en" selected="">English</option>
+                            <option value="ar">Arabic</option>
+                            <option value="zh">Chinese</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="hi">Hindi</option>
+                            <option value="id">Indonesian</option>
+                            <option value="ga">Irish</option>
+                            <option value="it">Italian</option>
+                            <option value="ja">Japanese</option>
+                            <option value="ko">Korean</option>
+                            <option value="pl">Polish</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="ru">Russian</option>
+                            <option value="es">Spanish</option>
+                            <option value="tr">Turkish</option>
+                            <option value="vi">Vietnamese</option>
+                            <option value="auto">Auto Detect (Experimental)</option>
+                        </select>
+                        <br>
+                        <textarea id="src" class="form-control"></textarea>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="col-6">
+                        <select id="lang-res" class="sel form-control">
+                            <option value="en">English</option>
+                            <option value="ar">Arabic</option>
+                            <option value="zh">Chinese</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="hi">Hindi</option>
+                            <option value="id">Indonesian</option>
+                            <option value="ga">Irish</option>
+                            <option value="it">Italian</option>
+                            <option value="ja">Japanese</option>
+                            <option value="ko">Korean</option>
+                            <option value="pl">Polish</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="ru" selected="">Russian</option>
+                            <option value="es">Spanish</option>
+                            <option value="tr">Turkish</option>
+                            <option value="vi">Vietnamese</option>
+                            <option value="auto">Auto Detect (Experimental)</option>
+                        </select>
+                        <br>
+                        <textarea id="res" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <button class="btn btn-primary" id="translate">Перевести</button>
+            <br>
+            <br>
+            <br>
+            <br>
+        </form>
+    </div>
+</section>
+<script src="static/js/translator.js"></script>
+{% endblock %}
