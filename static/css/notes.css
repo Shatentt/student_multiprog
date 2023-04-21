@@ -5,8 +5,11 @@ input[type="text"], textarea {
     border-radius: 10px;
 }
 textarea {
-    width: 400px;
+    width: 800px;
     height: 200px;
+}
+input[type="text"] {
+    width: 500px;
 }
 .form-group {
     margin-bottom: 5px;
@@ -63,7 +66,7 @@ p {
       text-underline-offset: 10px;
 }
 .subm {
-    width: 410px;
+    width: 800px;
     height: 70px;
     background: black;
     color: white;
@@ -73,7 +76,7 @@ p {
 }
 .subm:hover {
       background-color:#1f1136;
-      transition: 0.7s;
+      transition: 0.3s;
       cursor: pointer;
 }
 .a-div {
@@ -82,7 +85,7 @@ p {
 li {
     cursor: pointer;
     margin-left: 60px;
-    font-size: 20px;
+    font-size: 30px;
 }
 .link {
     color: black;

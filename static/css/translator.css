@@ -1,0 +1,78 @@
+
+.but {
+    background: #0000;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    border: 2px solid #000;
+    padding: 25px;
+}
+.but:hover {
+      transition: 0.7s;
+      cursor: pointer;
+      text-decoration: underline white;
+      text-underline-offset: 10px;
+}
+.head-but {
+    background: black;
+    margin-top: 115px;
+
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Century Gothic';
+    color: black;
+}
+header {
+    position: absolute;
+    height: 170px;
+    width: 100%;
+    background: #000000;
+}
+header p {
+    font-size: 40px;
+    height: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: white;
+}
+.bg-white {
+    margin-top: 50px;
+}
+.btn {
+    width: 800px;
+    height: 70px;
+    background: black;
+    color: white;
+    font-size: 40px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.btn:hover {
+    background-color:#1f1136;
+    transition: 0.7s;
+    cursor: pointer;
+}
+textarea {
+    width: 800px;
+    height: 200px;
+    border: 2px solid #7012b8;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: 'Arial';
+}
+.sel {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: #6d3387fd;
+    color: white;
+    width: 800px;
+    height: 50px;
+    font-size: 20px;
+}

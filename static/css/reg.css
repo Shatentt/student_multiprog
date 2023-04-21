@@ -33,9 +33,11 @@ header p {
     margin-top: 135px;
 }
 p {
-    font-size: 25px;
-    margin-left: 140px;
-    margin-right: 150px;
+    font-size: 30px;
+    margin-left: 250px;
+    margin-right: 250px;
     padding-top: 30px;
     color: black;
+    font-family: 'Century Gothic';
+    line-height: 60px;
 }

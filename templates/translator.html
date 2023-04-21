@@ -1,13 +1,20 @@
+<title>Переводчик</title>
+<link rel="stylesheet" href="../static/css/translator.css">
+<header>
+    <p>Student Multiprog - Переводчик</p>
+</header>
+<br>
+
 {% extends "head.html" %}
 
 {% block content %}
 <section class="pb-4">
-    <div class="bg-white boarder rounded-5">
+    <div align="center" class="bg-white boarder rounded-5">
         <form>
             <div class="container">
                 <div class="row">
                     <div class="col-6">
-                        <select id="lang-src" class="form-control">
+                        <select id="lang-src" class="sel form-control">
                             <option value="en" selected="">English</option>
                             <option value="ar">Arabic</option>
                             <option value="zh">Chinese</option>
@@ -30,8 +37,11 @@
                         <br>
                         <textarea id="src" class="form-control"></textarea>
                     </div>
+                    <br>
+                    <br>
+                    <br>
                     <div class="col-6">
-                        <select id="lang-res" class="form-control">
+                        <select id="lang-res" class="sel form-control">
                             <option value="en">English</option>
                             <option value="ar">Arabic</option>
                             <option value="zh">Chinese</option>
@@ -56,7 +66,13 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
             <button class="btn btn-primary" id="translate">Перевести</button>
+            <br>
+            <br>
+            <br>
+            <br>
         </form>
     </div>
 </section>

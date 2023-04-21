@@ -10,7 +10,7 @@
     --light-second: #c3c2c8;
     --light-hover: #edf0f5;
     --light-text: #151426;
-    --blue: #007497;
+    --blue: #aa37d4bb;
     --white: #fff;
     --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     --font-family: cursive;
@@ -242,4 +242,83 @@
 
 .month-list > div > div:hover {
     background-color: var(--color-hover);
+}
+
+.but {
+    background: #0000;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    border: 2px solid #000;
+    padding: 25px;
+}
+.but:hover {
+      transition: 0.7s;
+      cursor: pointer;
+      text-decoration: underline white;
+      text-underline-offset: 10px;
+}
+.head-but {
+    background: black;
+    margin-top: 115px;
+
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Century Gothic';
+    color: black;
+}
+header {
+    position: absolute;
+    height: 170px;
+    width: 100%;
+    background: #000000;
+}
+header p {
+    font-size: 40px;
+    height: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: white;
+}
+.add {
+    width: 400px;
+    height: 70px;
+    background: black;
+    color: white;
+    font-size: 40px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    left: 50;
+}
+.add:hover {
+      background-color:#1f1136;
+      transition: 0.3s;
+      cursor: pointer;
+}
+input, textarea {
+    border: 2px solid #8d3bb3;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    width: 400px;
+    height: 50px;
+}
+.btn {
+    width: 400px;
+    height: 70px;
+    background: black;
+    color: white;
+    font-size: 40px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    left: 50;
+}
+.btn:hover {
+      background-color:#1f1136;
+      transition: 0.3s;
+      cursor: pointer;
 }
