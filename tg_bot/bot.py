@@ -74,8 +74,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS notes
                (id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
                 title TEXT,
-                content TEXT,
-                tg BOOLEAN)''')
+                content TEXT)''')
 
 
 logging.basicConfig(
@@ -139,12 +138,12 @@ async def notes_handler(update, context):
         user_id = update.message.from_user.id
         title = ' '.join(context.args[1:])
         content = ""
-        cur.execute('INSERT INTO notes (user_id, title, content, tg) VALUES (?, ?, ?, ?)', (user_id, title, content, 1))
+        cur.execute('INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)', (user_id, title, content))
         conn.commit()
         await update.message.reply_text('Заметка успешно создана!')
     elif context.args[0] == "view":
         user_id = update.message.from_user.id
-        cur.execute('SELECT id, title, content FROM notes WHERE tg = 1 AND user_id = ?', (user_id,))
+        cur.execute('SELECT id, title, content FROM notes WHERE user_id = ?', (user_id,))
         notes = cur.fetchall()
         if len(notes) == 0:
             await update.message.reply_text('У вас нет заметок!')
@@ -155,7 +154,7 @@ async def notes_handler(update, context):
         user_id = update.message.from_user.id
         note_id = context.args[1]
         content = ' '.join(context.args[2:])
-        cur.execute('UPDATE notes SET content = ? WHERE tg = 1 AND id = ? AND user_id = ?', (content, note_id, user_id))
+        cur.execute('UPDATE notes SET content = ? WHERE id = ? AND user_id = ?', (content, note_id, user_id))
         conn.commit()
         if cur.rowcount == 0:
             await update.message.reply_text('Заметка не найдена!')
@@ -164,7 +163,7 @@ async def notes_handler(update, context):
     elif context.args[0] == "delete":
         user_id = update.message.from_user.id
         note_id = context.args[1]
-        cur.execute('DELETE FROM notes WHERE id = ? AND user_id = ? AND tg = 1', (note_id, user_id))
+        cur.execute('DELETE FROM notes WHERE id = ? AND user_id = ?', (note_id, user_id))
         conn.commit()
         if cur.rowcount == 0:
             await update.message.reply_text('Заметка не найдена!')

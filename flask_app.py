@@ -9,7 +9,7 @@ from data.users import User
 from forms.SignInForm import SignInForm
 from forms.SignUpForm import SignUpForm
 from forms.NoteForm import NoteForm
-from data.notes import db, Note
+from data.notes import Note
 from data import db_session
 from pathlib import Path
 from flask import Flask, render_template, url_for, redirect, request
@@ -25,9 +25,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'mysecretkey'
 cur_dir = Path.cwd()
-db_path = cur_dir / 'databases' / 'notes.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
-db.init_app(app)
 
 HEADERS = {"User-Agent": UserAgent().random}
 imgs_formulas = {}
@@ -142,28 +139,28 @@ def logout():
 @app.route('/notes', methods=['GET', 'POST'])
 @login_required
 def notes():
+    db_sess = db_session.create_session()
     form = NoteForm()
     if form.validate_on_submit():
         title = form.title.data
         content = form.content.data
-        note = Note(title=title, content=content, user_id=current_user.id, tg=0)
-        db.session.add(note)
-        db.session.commit()
+        note = Note(title=title, content=content, user_id=current_user.id)
+        db_sess.add(note)
+        db_sess.commit()
         return redirect(url_for('notes'))
-    notes = Note.query.filter_by(user_id=current_user.id, tg=0).all()
+    notes = db_sess.query(Note).filter(Note.user_id == current_user.id).all()
     return render_template('notes.html', form=form, notes=notes)
 
 
 @app.route('/notes/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_note(id):
-    note = Note.query.get_or_404(id)
+    db_sess = db_session.create_session()
+    note = db_sess.query(Note).filter(Note.id == id).first()
     form = NoteForm(obj=note)
-    print(123)
     if form.validate_on_submit():
-        print(123123)
         form.populate_obj(note)
-        db.session.commit()
+        db_sess.commit()
         return redirect(url_for('notes'))
     return render_template('edit_note.html', form=form, note=note)
 
@@ -171,9 +168,10 @@ def edit_note(id):
 @app.route('/notes/delete/<int:id>', methods=['POST'])
 @login_required
 def delete_note(id):
-    note = Note.query.get_or_404(id)
-    db.session.delete(note)
-    db.session.commit()
+    db_sess = db_session.create_session()
+    note = db_sess.query(Note).filter(Note.id == id).first()
+    db_sess.delete(note)
+    db_sess.commit()
     return redirect(url_for('notes'))
 
 
