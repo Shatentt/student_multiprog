@@ -24,6 +24,7 @@
 }
 
 .calendar {
+    margin-left: 40%;
     height: max-content;
     width: max-content;
     background-color: var(--bg-main);

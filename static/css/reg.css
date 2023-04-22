@@ -41,3 +41,8 @@ p {
     font-family: 'Century Gothic';
     line-height: 60px;
 }
+li {
+    font-family: 'Century Gothic';
+    margin-left: 250px;
+    font-size: 30px;
+}

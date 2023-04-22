@@ -181,6 +181,12 @@ def main_index():
     return render_template("main_page.html")
 
 
+@app.route('/index')
+@login_required
+def ind():
+    return render_template("index.html")
+
+
 @app.route('/text-recognize')
 def upload_image():
     return render_template('image_upload.html')
