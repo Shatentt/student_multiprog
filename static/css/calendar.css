@@ -22,7 +22,17 @@
     --color-hover: var(--light-hover);
     --color-txt: var(--light-text);
 }
-
+.but-white {
+    font-size: 20px;
+    color: black;
+    background: white;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 40px;
+    margin-right: 30px;
+}
 .calendar {
     margin-left: 40%;
     height: max-content;

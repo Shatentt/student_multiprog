@@ -31,16 +31,19 @@ imgs_formulas = {}
 
 
 @app.route("/calc")
+@login_required
 def calc():
     return render_template("calc.html", title='Калькулятор')
 
 
 @app.route("/graph-calc")
+@login_required
 def graph_calc():
     return render_template("graph-calc.html")
 
 
 @app.route("/calendar/get", methods=['GET'])
+@login_required
 def get_schedule():
     # Получаем дату из запроса
     date = request.args.get('date')
@@ -52,6 +55,7 @@ def get_schedule():
 
 
 @app.route("/calendar")
+@login_required
 def calendar():
     db_sess = db_session.create_session()
     schedule = db_sess.query(Schedule).filter(Schedule.user_id == current_user.get_id())
@@ -59,6 +63,7 @@ def calendar():
 
 
 @app.route("/calendar/new", methods=['GET', 'POST'])
+@login_required
 def calendar_add():
     date = request.args.get('date')
     form = ScheduleForm()
@@ -78,17 +83,22 @@ def calendar_add():
 
 
 @app.route('/translator')
+@login_required
 def translator():
     return render_template('translator.html')
 
 
 @app.route("/")
 def index():
+    if current_user.is_authenticated:
+        return render_template("main_page.html")
     return render_template("register.html")
 
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
+    if current_user.is_authenticated:
+        return render_template("main_page.html")
     form = SignInForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -104,6 +114,8 @@ def sign_in():
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
+    if current_user.is_authenticated:
+        return render_template("main_page.html")
     form = SignUpForm()
     if form.validate_on_submit():
         if form.password.data != form.confirm_password.data:
@@ -184,18 +196,14 @@ def main_index():
     return render_template("main_page.html")
 
 
-@app.route('/index')
-@login_required
-def ind():
-    return render_template("index.html")
-
-
 @app.route('/text-recognize')
+@login_required
 def upload_image():
     return render_template('image_upload.html')
 
 
 @app.route('/text-recognize/done', methods=['POST'])
+@login_required
 def recognized_text():
     file = request.files['file']
     file.save(os.path.join('static/assets/images', file.filename))
@@ -215,6 +223,7 @@ def recognized_text():
 
 
 @app.route('/formulas')
+@login_required
 def formulas():
     # math
     url_math = "https://educon.by/index.php/formuly/formmat"
@@ -269,6 +278,7 @@ def formulas():
 
 
 @app.route('/formulas/<theme>')
+@login_required
 def themes(theme):
     return render_template('theme.html', title=theme, theme=theme, list=imgs_formulas)
 

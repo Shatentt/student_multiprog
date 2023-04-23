@@ -3,7 +3,15 @@
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 <script src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 <header>
-    <p>Student Multiprog - Графический калькулятор</p>
+    <div style="float: left; margin-top: 40px;">
+        <p>Student Multiprog - Графический калькулятор</p>
+    </div>
+    <div style="float: right;">
+        <a href="/logout">
+            <button class="but-white">Выйти из аккаунта</button>
+        </a>
+        <button class="but-white" onclick="window.location.href = 'https://t.me/studentmultiprogbot';">Наш tg-bot</button>
+    </div>
 </header>
 <br>
 {% extends "head.html" %}

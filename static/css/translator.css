@@ -18,6 +18,17 @@
     margin-top: 115px;
 
 }
+.but-white {
+    font-size: 20px;
+    color: black;
+    background: white;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 40px;
+    margin-right: 30px;
+}
 *{
     margin: 0;
     padding: 0;
