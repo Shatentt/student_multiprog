@@ -1,13 +1,12 @@
 from datetime import datetime
-
 import sqlalchemy
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import orm
-
 from .db_session import SqlAlchemyBase
 
 
+# Модель заметок для базы данных
 class Note(SqlAlchemyBase):
     __tablename__ = 'notes'
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)

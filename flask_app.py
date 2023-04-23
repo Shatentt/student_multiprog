@@ -1,5 +1,10 @@
-import os
+"""
+    Веб-сайт "Student Multiprog"
+    Авторы: Фархитов Арслан, Грачев Константин, Крейдлина Эмилия
+"""
 
+
+import os
 import easyocr
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from datetime import time
@@ -90,7 +95,8 @@ def translator():
 
 @app.route("/")
 def index():
-    if current_user.is_authenticated:
+    # Страница для не зарегистрирован
+    if current_user.is_authenticated:  # Если пользователь зарегистрирован, отправляем его на главную страницу
         return render_template("main_page.html")
     return render_template("register.html")
 
@@ -151,36 +157,36 @@ def logout():
     return redirect("/")
 
 
-@app.route('/notes', methods=['GET', 'POST'])
+@app.route('/notes', methods=['GET', 'POST'])  # Страница, где можно создать новую заметку и посмотреть все свои заметки
 @login_required
 def notes():
     db_sess = db_session.create_session()
-    form = NoteForm()
-    if form.validate_on_submit():
+    form = NoteForm()  # Создаем форму для заметки
+    if form.validate_on_submit():  # Если форма готова, добавляем ее в бд и отображаем
         title = form.title.data
         content = form.content.data
         note = Note(title=title, content=content, user_id=current_user.id)
         db_sess.add(note)
         db_sess.commit()
         return redirect(url_for('notes'))
-    notes = db_sess.query(Note).filter(Note.user_id == current_user.id).all()
+    notes = db_sess.query(Note).filter(Note.user_id == current_user.id).all()  # Находим все заметки пользователя
     return render_template('notes.html', form=form, notes=notes)
 
 
-@app.route('/notes/<int:id>', methods=['GET', 'POST'])
+@app.route('/notes/<int:id>', methods=['GET', 'POST'])  # Страница редактирования заметки
 @login_required
 def edit_note(id):
     db_sess = db_session.create_session()
-    note = db_sess.query(Note).filter(Note.id == id).first()
+    note = db_sess.query(Note).filter(Note.id == id).first()  # Находим заметку с тем айди, который получили
     form = NoteForm(obj=note)
-    if form.validate_on_submit():
+    if form.validate_on_submit():  # Если заметка готова, изменяем ее
         form.populate_obj(note)
         db_sess.commit()
         return redirect(url_for('notes'))
     return render_template('edit_note.html', form=form, note=note)
 
 
-@app.route('/notes/delete/<int:id>', methods=['POST'])
+@app.route('/notes/delete/<int:id>', methods=['POST'])  # Удаление заметки
 @login_required
 def delete_note(id):
     db_sess = db_session.create_session()
@@ -190,35 +196,37 @@ def delete_note(id):
     return redirect(url_for('notes'))
 
 
-@app.route('/main')
+@app.route('/main')  # Главная страница
 @login_required
 def main_index():
     return render_template("main_page.html")
 
 
-@app.route('/text-recognize')
+@app.route('/text-recognize')  # Страница загрузки изображения и выбора языка для распознавания текста
 @login_required
 def upload_image():
     return render_template('image_upload.html')
 
 
-@app.route('/text-recognize/done', methods=['POST'])
+@app.route('/text-recognize/done', methods=['POST'])  # Страница показа результата распознавания текста
 @login_required
 def recognized_text():
     file = request.files['file']
-    file.save(os.path.join('static/assets/images', file.filename))
+    file.save(os.path.join('static/assets/images', file.filename))  # Сохраняем в папку images файл, который выбрал
+    # пользователь
     language = request.form['language']
     reader = easyocr.Reader([language])
     try:
-        result = reader.readtext(os.path.join('static/assets/images', file.filename))
+        result = reader.readtext(os.path.join('static/assets/images', file.filename))  # распознаем текст
         words = []
         for r in result:
             words.append(r[1])
-        words = " ".join(words)
+        words = " ".join(words)  # приводим текст к читаемому виду
         if os.path.isfile(os.path.join('static/assets/images', file.filename)):
-            os.remove(os.path.join('static/assets/images', file.filename))
-    except AttributeError:
-        words = "Ошибка! Возможно, вам стоит изменить расширение файла или поменять его название (! название не должно содержать русские буквы !)"
+            os.remove(os.path.join('static/assets/images', file.filename))  # После использования удаляем файл с севера
+    except AttributeError:  # Если easyocr не может найти файл, выдаем ошибку
+        words = "Ошибка! Возможно, вам стоит изменить расширение файла или поменять его название (! название не " \
+                "должно содержать русские буквы !) "
     return render_template('recognize_result.html', words=words)
 
 

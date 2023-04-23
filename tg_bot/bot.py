@@ -1,8 +1,11 @@
-import logging
+"""
+    Телеграмм-бот "Student Multiprog"
+"""
 
+
+import logging
 import requests
 from deep_translator.exceptions import LanguageNotSupportedException
-from dotenv import load_dotenv
 from telegram.ext import Application, Updater, CommandHandler, MessageHandler, filters
 from config import BOT_TOKEN
 import sqlite3
@@ -10,7 +13,7 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from deep_translator import GoogleTranslator
 
-HEADERS = {"User-Agent": UserAgent().random}
+HEADERS = {"User-Agent": UserAgent().random}  # Парсим формулы с нужного нам сайта
 imgs_formulas_maths = {}
 imgs_formulas_physics = {}
 url_math = "https://educon.by/index.php/formuly/formmat"
@@ -61,9 +64,8 @@ imgs_formulas_physics['Оптика'] = b[224:233]
 imgs_formulas_physics['Атомная и ядерная физика'] = b[233:254]
 imgs_formulas_physics['Основы специальной теории относительности (СТО)'] = b[254:264]
 
-is_translating = False
-from_lang = "auto"
-to_lang = "auto"
+from_lang = "auto"  # переменная, отвечает за то, с какого языка переводить
+to_lang = "auto"  # переменная, отвечает за то, на какой язык переводить
 
 # Соединяемся с базой данных SQL
 conn = sqlite3.connect('../databases/notes.db')
@@ -77,16 +79,19 @@ cur.execute('''CREATE TABLE IF NOT EXISTS notes
                 content TEXT)''')
 
 
+# Подключаем логирование
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG
 )
 logger = logging.getLogger(__name__)
-load_dotenv()
 
 
+# Обработчик для формул
 async def formulas_handler(update, context):
     if len(context.args) == 0:
-        await update.message.reply_text("/show_formulas maths - посмотреть названия и id тем по математике\n/show_formulas phisics - посмотреть названия и id тем по физике\n/show_formulas <id> - найти формулы по айди темы")
+        await update.message.reply_text("/show_formulas maths - посмотреть названия и id тем по "
+                                        "математике\n/show_formulas phisics - посмотреть названия и id тем по "
+                                        "физике\n/show_formulas <id> - найти формулы по айди темы")
     elif context.args[0] == "maths":
         keys = list(imgs_formulas_maths)
         for i in range(len(keys)):
@@ -103,6 +108,8 @@ async def formulas_handler(update, context):
             for i in imgs_formulas_physics[list(imgs_formulas_physics)[int(context.args[0]) - 11]]:
                 await update.message.reply_photo(i)
 
+
+# Обработчик для любого сообщения, который вводит пользователь, не команда. Переводит его, если пользователь выбрал язык
 async def handle_text(update, context):
     if to_lang != "auto":
         text = update.message.text
@@ -110,19 +117,26 @@ async def handle_text(update, context):
         await update.message.reply_text(f'Перевод вашего сообщения c {from_lang} на {to_lang} - {translated}')
 
 
+# Обработчик команды start, рассказывает основную информацию о боте
 async def start(update, context):
-    await update.message.reply_text(f'Привет! Я бот-помощник для студентов и школьников. Чтобы узнать, что я могу, ты можешь написать:\n/notes - показать все команды для заметок\n/translate - показать информацию о переводчике\n/formulas - показать информацию о формулах')
+    await update.message.reply_text(f'Привет! Я бот-помощник для студентов и школьников. Чтобы узнать, что я могу, '
+                                    f'ты можешь написать:\n/notes - показать все команды для заметок\n/translate - '
+                                    f'показать информацию о переводчике\n/formulas - показать информацию о формулах')
 
+
+# Обработчик переводчика
 async def translate_handler(update, context):
     global from_lang, to_lang
     if len(context.args) == 0:
         s = ""
-        langs_dict = GoogleTranslator().get_supported_languages(as_dict=True)
+        langs_dict = GoogleTranslator().get_supported_languages(as_dict=True)  # получаем словарь всех айди языков
         for i in langs_dict:
-            s += f"{i} - {langs_dict[i]}\n"
-        await update.message.reply_text(f'Введите /translate <from_language> <to_language>, чтобы установить с какого и на какой язык переводить.После выбора языка напишите боту любое сообщение, и он скажет вам его перевод.\nАйди языков:\n{s}')
+            s += f"{i} - {langs_dict[i]}\n"  # Преобразуем в понятный пользователю вид
+        await update.message.reply_text(f'Введите /translate <from_language> <to_language>, чтобы установить с какого '
+                                        f'и на какой язык переводить.После выбора языка напишите боту любое '
+                                        f'сообщение, и он скажет вам его перевод.\nАйди языков:\n{s}')
     elif len(context.args) == 2:
-        try:
+        try:  # смена языков
             translated = GoogleTranslator(source=context.args[0], target=context.args[1]).translate("")
             from_lang = context.args[0]
             to_lang = context.args[1]
@@ -131,17 +145,21 @@ async def translate_handler(update, context):
             await update.message.reply_text(f'Ошибка! Неправильно введен айди языка')
 
 
+# Обработчик заметок
 async def notes_handler(update, context):
-    if len(context.args) == 0:
-        await update.message.reply_text('Команды для заметок:\n/notes view - посмотреть ваши заметки и их айди\n/notes create <note_name> - создать заметку с названием <note_name>\n/notes edit <note_id> <text> - изменить текст заметки по айди\n/notes delete <note_id> - удалить заметку по айди')
-    elif context.args[0] == "create":
+    if len(context.args) == 0:  # если пользователь написал только /notes, выдаем ему основную информацию о заметках
+        await update.message.reply_text('Команды для заметок:\n/notes view - посмотреть ваши заметки и их '
+                                        'айди\n/notes create <note_name> - создать заметку с названием '
+                                        '<note_name>\n/notes edit <note_id> <text> - изменить текст заметки по '
+                                        'айди\n/notes delete <note_id> - удалить заметку по айди')
+    elif context.args[0] == "create":  # если пользователь написал /notes create..., создаем заметку
         user_id = update.message.from_user.id
         title = ' '.join(context.args[1:])
         content = ""
         cur.execute('INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)', (user_id, title, content))
         conn.commit()
         await update.message.reply_text('Заметка успешно создана!')
-    elif context.args[0] == "view":
+    elif context.args[0] == "view":  # если пользователь написал /notes view..., показываем ему все заметки
         user_id = update.message.from_user.id
         cur.execute('SELECT id, title, content FROM notes WHERE user_id = ?', (user_id,))
         notes = cur.fetchall()
@@ -150,7 +168,7 @@ async def notes_handler(update, context):
         else:
             for note in notes:
                 await update.message.reply_text(f'{note[0]}. {note[1]}\n\n{note[2]}')
-    elif context.args[0] == "edit":
+    elif context.args[0] == "edit":  # если пользователь написал /notes edit..., изменяем заметку
         user_id = update.message.from_user.id
         note_id = context.args[1]
         content = ' '.join(context.args[2:])
@@ -160,7 +178,7 @@ async def notes_handler(update, context):
             await update.message.reply_text('Заметка не найдена!')
         else:
             await update.message.reply_text('Заметка успешно отредактирована!')
-    elif context.args[0] == "delete":
+    elif context.args[0] == "delete":  # если пользователь написал /notes delete..., удаляем заметку
         user_id = update.message.from_user.id
         note_id = context.args[1]
         cur.execute('DELETE FROM notes WHERE id = ? AND user_id = ?', (note_id, user_id))
