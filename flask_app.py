@@ -42,9 +42,12 @@ def graph_calc():
 
 @app.route("/calendar/get", methods=['GET'])
 def get_schedule():
+    # Получаем дату из запроса
     date = request.args.get('date')
     db_sess = db_session.create_session()
+    # выбираем из базы данных расписание на день
     schedule = db_sess.query(Schedule).filter(Schedule.user_id == current_user.get_id(), Schedule.date == date)
+    # возвращаем html код, который увидит пользоватьель (в js этот код становится содержимым тега div)
     return render_template("calendar_form.html", schedule=schedule)
 
 
@@ -65,7 +68,7 @@ def calendar_add():
             title=form.title.data,
             content=form.content.data,
             time=time(form.hour.data, form.minute.data),
-            date=Date(*map(int, date.split('-'))),
+            date=Date(*map(int, date.split('-'))),  # превращаем дату из строки в datetime.date
             user_id=current_user.get_id()
         )
         db_sess.add(schedule)
